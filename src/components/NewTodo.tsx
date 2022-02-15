@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { MutableRefObject, useContext } from 'react';
 import { useRef } from "react";
 import classes from './NewTodo.module.css';
 
 import { TodosContext } from '../store/todos-context';
 
 const NewTodo: React.FC = () => {
-const todoTextInputRef = useRef<HTMLInputElement>(null);
+    const todoTextInputRef = useRef<HTMLInputElement>(null);
     const todosCtx = useContext(TodosContext);
 
     const submitHandler = (event: React.FormEvent) => {
@@ -18,6 +18,7 @@ const todoTextInputRef = useRef<HTMLInputElement>(null);
         }
 
         todosCtx.addTodo(enteredText);
+        todoTextInputRef.current!.value = "";
     }
 
     return (
