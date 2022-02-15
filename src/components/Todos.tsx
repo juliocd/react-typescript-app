@@ -1,18 +1,21 @@
-import Todo from '../models/todo';
-import TodoItem from '../components/TodoItem';
+import React, { useContext } from 'react';
+
+import TodoItem from './TodoItem';
+import { TodosContext } from '../store/todos-context';
 import classes from './Todos.module.css';
 
-const Todos: React.FC<{
-        items: Todo[]; 
-        onRemoveTodo: (id: string) => void
-    }> = (props) => { //Add custom Object type componenet props
+const Todos: React.FC = () => { //Add custom Object type componenet props
+    const todosCtx = useContext(TodosContext);
 
     return <ul className={classes.todos}>
-        {props.items.map(item => {
+        {todosCtx.items.map(item => {
             // bind allows to modify JS function after being defined
-            return <TodoItem onRemoveTodo={props.onRemoveTodo.bind(null, item.id)} item={item}/>
+            return <TodoItem 
+            onRemoveTodo={todosCtx.removeTodo.bind(null, item.id)} 
+            item={item}/>
         })}
     </ul>
 }
 
 export default Todos;
+
